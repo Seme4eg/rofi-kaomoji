@@ -1,0 +1,46 @@
+#!/usr/bin/env bash
+
+# NOTE: KAOMOJIS file taken from https://git.sr.ht/~pkal/insert-kaomoji
+# convenient for me since i also use this emacs package
+
+moji_dir=$(dirname "$0")
+moji_path="$moji_dir/KAOMOJIS"
+categories=$(grep -o -E '\<[A-Z][a-z]{2,}\>' "$moji_path")
+select_random="Control+Return"
+
+show_menu() {
+  # force monospace font to not get those fields messy
+  category=$(echo -e "$categories" |
+               rofi -dmenu -i -theme-str '#entry { placeholder: "Choose kaomoji:"; }' \
+                 -kb-custom-1 "$select_random" \
+                 -kb-accept-custom "" \
+                 -theme-str '* { font: "syne mono 13"; }')
+
+  rofi_exit=$?
+
+  [ $rofi_exit -eq 1 ] && exit
+
+  line=$(grep "$category" "$moji_path")
+  # trim one specitl sign from the end
+  line="${line%*}"
+  # trim another special sign from the beginning, including category names
+  line="${line#*}"
+  line="$lineback"
+
+  kaomojis=$(echo "$line" | tr '' '\n' )
+
+  case $rofi_exit in
+    10) selection=$(echo "$kaomojis" | head -n -1 | shuf -n 1) ;;
+    *)
+      selection=$(echo "$kaomojis" | awk '{ print length, $0 }' |
+                    sort -n | cut -d' ' -f 2- |
+                    rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }')
+      ;;
+  esac
+
+  [ "$selection" = "back" ] && show_menu || wl-copy "$selection"
+}
+
+show_menu
+
+exit 0

@@ -1,0 +1,19 @@
+#+title: Rofi-kaomoji (wayland only)
+
+Simple script to search through the collection of kaomoji and copy selected one
+to your clipboard.
+
+=Control + Return= default binding selects random kaomoji from selected category.
+
+*Installation*: copy [[KAOMOJIS]] and [[rofi-kaomoji]] files to same dir and make sure
+that dir is in your =PATH=.
+
+Dependencies:
+- *wl-clipboard*
+
+KAOMOJIS file taken from https://git.sr.ht/~pkal/insert-kaomoji. Convenient for
+me since I also use this emacs package.
+
+[[assets/categories.png]]
+
+[[assets/kaomojis.png]]
