@@ -31,11 +31,12 @@ show_menu() {
 
   case $rofi_exit in
     10) selection=$(echo "$kaomojis" | head -n -1 | shuf -n 1) ;;
-    *)
+    0)
       selection=$(echo "$kaomojis" | awk '{ print length, $0 }' |
                     sort -n | cut -d' ' -f 2- |
                     rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }')
       ;;
+    *) exit ;;
   esac
 
   [ "$selection" = "back" ] && show_menu || wl-copy "$selection"
