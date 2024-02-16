@@ -25,15 +25,16 @@ show_menu() {
   line="${line%*}"
   # trim another special sign from the beginning, including category names
   line="${line#*}"
-  line="$lineback"
 
-  kaomojis=$(echo "$line" | tr '' '\n' )
+  kaomojis=$(echo "$line" | tr '' '\n' | awk '{ print length, $0 }' |
+               sort -n | cut -d' ' -f 2- )
+
+  kaomojis="$kaomojis"$'\n'"back"
 
   case $rofi_exit in
     10) selection=$(echo "$kaomojis" | head -n -1 | shuf -n 1) ;;
     0)
-      selection=$(echo "$kaomojis" | awk '{ print length, $0 }' |
-                    sort -n | cut -d' ' -f 2- |
+      selection=$(echo "$kaomojis" |
                     rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }')
       ;;
     *) exit ;;
