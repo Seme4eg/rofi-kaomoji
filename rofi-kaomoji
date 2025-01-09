@@ -11,14 +11,12 @@ select_random="Control+Return"
 delete_previous="Control+d"
 
 category_menu() {
-  # force monospace font to not get those fields messy
   category=$(echo "$categories" |
     rofi -dmenu -i -theme-str '#entry { placeholder: "Choose kaomoji:"; }' \
       -kb-accept-custom "" \
       -kb-custom-1 "$select_random" \
       -kb-remove-char-forward "" \
-      -kb-custom-2 "$delete_previous" \
-      -theme-str '* { font: "syne mono 13"; }')
+      -kb-custom-2 "$delete_previous")
 
   rofi_exit=$?
 
@@ -46,8 +44,7 @@ back"
     exit 0
   fi
 
-  selection=$(echo "$kaomojis" |
-    rofi -dmenu -i -theme-str '* { font: "syne mono 13"; }')
+  selection=$(echo "$kaomojis" | rofi -dmenu -i)
 
   if [ "$selection" = "back" ]; then
     category_menu
