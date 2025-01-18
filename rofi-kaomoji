@@ -38,7 +38,8 @@ delete_previous() {
   # since many mojis have weird symbols that require escaping
   line="$(grep --line-number --fixed-strings "$(wl-paste -n)" "$moji_path" |
     cut -d: -f 1)"
-  sed --follow-symlinks -i "${line}d" "$moji_path"
+
+  [ -n "$line" ] && sed --follow-symlinks -i "${line}d" "$moji_path"
 }
 
 kaomoji_menu() {
