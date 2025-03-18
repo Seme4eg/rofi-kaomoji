@@ -5,7 +5,7 @@ to your clipboard.
 
 =Control + Return= default binding selects random kaomoji from selected category.
 
-*Installation*: copy [[KAOMOJIS]] and [[rofi-kaomoji]] files to same dir and make sure
+*Installation*: copy [[KAOMOJIS.md]] and [[rofi-kaomoji]] files to same dir and make sure
 that dir is in your =PATH=.
 
 Dependencies:
